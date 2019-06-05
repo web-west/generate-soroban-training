@@ -1,0 +1,21 @@
+{
+  "name": "generate-soroban-training",
+  "version": "1.0.0",
+  "description": "Generate soroban for training",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tests",
+    "soroban",
+    "training",
+    "soroban training",
+    "soroban examples",
+    "soroban tests",
+    "sorobantasks"
+  ],
+  "author": "web-west",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}

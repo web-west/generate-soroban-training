@@ -1,6 +1,6 @@
 ## Генератор примеров по методологии "соробан"
 
-![](https://img.shields.io/github/stars/pandao/editor.md.svg) ![](https://img.shields.io/github/forks/pandao/editor.md.svg) ![](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg) ![](https://img.shields.io/github/issues/pandao/editor.md.svg)
+![](https://img.shields.io/github/stars/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/forks/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/tag/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/release/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/issues/web-west/generate-soroban-training.svg)
 
 ### Возможности
 

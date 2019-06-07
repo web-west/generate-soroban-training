@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "npm run compile && node lib/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run compile",
     "release": "standard-version",
     "compile": "babel --presets es2015 -d lib/ src/",
     "prepublish": "npm run compile",

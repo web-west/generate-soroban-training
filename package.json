@@ -2,7 +2,7 @@
   "name": "generate-soroban-training",
   "version": "1.0.6",
   "description": "Generate soroban for training",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "npm run compile && node lib/index.js",
     "test": "npm run compile",

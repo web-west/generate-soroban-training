@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "release": "standard-version",
     "compile": "babel --presets es2015 -d lib/ src/",
-    "prepublish": "npm run compile"
+    "prepublish": "npm run compile",
+    "build": "npm run compile"
   },
   "keywords": [
     "tests",

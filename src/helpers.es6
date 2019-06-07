@@ -20,3 +20,9 @@ export function ArrayJoinToNumbersRundom(array, iteration) {
 export function ArrayNumbersSum(array) {
     return eval(array.join('+'))
 }
+
+export function ArrayToNumberNormalize(array) {
+    return array.map((num, index) => {
+        return index === 0 || num < 0 ? num : `+${num}`
+    })
+}

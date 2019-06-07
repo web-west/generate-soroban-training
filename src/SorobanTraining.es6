@@ -1,6 +1,7 @@
 import Combinatorics from 'js-combinatorics'
 import Sugar from 'sugar'
 import * as helper from './helpers';
+import * as ex from './exceptions';
 
 export default class {
     
@@ -14,6 +15,8 @@ export default class {
         this.rundomIteration = config.rundomIteration || 10;
         this.generateActionNumbers = [];
         this.limit = config.limit || 5000;
+        this.exceptions = config.exceptions || null
+        this.maxAllowedNumber = Math.max(...config.allowedNumbers) || null
     }
 
     getCombinationAllowedNumbers () {
@@ -43,7 +46,9 @@ export default class {
 
         this.generateActionNumbers = Sugar.Array.unique(result);
 
-        this.clearFirstMinusNumber();
+        if (this.exceptions) {
+            this.clearExceptions()
+        }
 
         return this.generateActionNumbers;
     }
@@ -52,8 +57,26 @@ export default class {
         this.combinationAllowedNumbers = this.combinationAllowedNumbers.filter(item => item[0] !== 0);
     }
 
-    clearFirstMinusNumber () {
-        this.generateActionNumbers = this.generateActionNumbers.filter(item => item[0] > 0);
+    clearExceptions () {
+        for (let key in this.exceptions) {
+            switch (key) {
+                case 'first mines number':
+                    this.generateActionNumbers = ex.FirstMinusNumber(this.generateActionNumbers)
+                    break;
+                case 'sum <= max allowed number':
+                    this.generateActionNumbers = ex.SumLargeEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.maxAllowedNumber)
+                    break;
+                case 'sub sum <= max allowed number':
+                    this.generateActionNumbers = ex.SubSumLargeEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.maxAllowedNumber)
+                    break;
+                case 'sub sum != zero':
+                    this.generateActionNumbers = ex.SumNotZero(this.generateActionNumbers)
+                    break;
+                case 'actions':
+                    this.generateActionNumbers = ex.Actions(this.generateActionNumbers, this.exceptions[key])
+                    break;
+            }
+        }
     }
 
     getExamplesArray () {
@@ -69,11 +92,10 @@ export default class {
     getExamplesString () {
         let array = this.getExamplesArray()
         return array.map((item) => {
-            let ex = item.example.map((num, index) => {
-                return index === 0 || num < 0 ? num : `+${num}`
-            })
+            let ex = helper.ArrayToNumberNormalize(item.example);
             let sum = `=${item.sum}`
             return  ex.join('') + sum
         })
+        return 
     }
 };

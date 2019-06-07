@@ -1,6 +1,6 @@
 ## Генератор примеров по методологии "соробан"
 
-![](https://img.shields.io/github/stars/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/forks/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/tag/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/release/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/issues/web-west/generate-soroban-training.svg)
+![](https://img.shields.io/github/stars/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/forks/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/tag/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/issues/web-west/generate-soroban-training.svg)
 
 ### Возможности
 
@@ -18,6 +18,10 @@
 
 - первый ноль в числе
 - первое отрицательное число
+- примеры с суммой больше максимального чиста
+- исключает примеры с промежуточной суммой больше максимального чиста
+- исключает сумму равную нулю
+- исключает вхождение определенных операций
 
 ### API
 #### Methods
@@ -51,13 +55,19 @@ console.log(examples);
 ```javascript
 const config = {
 	digit: 1, // разрядность числа
-    allowedNumbers: [0, 1, 2, 3, 4, 5], // разрешенныйе цифры
+    allowedNumbers: [0, 1, 2, 3, 4, 5], // разрешенные цифры
     actions: 2, // количество математических операций
     exampleslength: 2, // количество генерируемых примеров
 	rundomIteration: 10, //  количество массивов случайных чисел
-	limit: 5000; // количество случайных наборов потенциальных примеров
+	limit: 5000, // количество случайных наборов потенциальных примеров
+	exceptions: {
+        'first mines number': null, // исключает первое отрицательное число
+        'sum <= max allowed number': null, // исключает примеры с суммой больше максимального чиста, если `null` то максимальное число массива `allowedNumbers`
+        'sub sum <= max allowed number': null, // исключает примеры с промежуточной суммой больше максимального чиста, если `null` то максимальное число массива `allowedNumbers`
+        'sub sum != zero': null, // исключает сумму равную нулю
+        'actions': ['8-4', '7-4', '6-4', '5-4', '1+4', '2+4', '3+4', '4+4'] // исключает вхождение определенных операций
+    },
 }
 
 new SorobanTraining(config);
 ```
-### Далее будет :tw-1f603:

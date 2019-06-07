@@ -1,6 +1,6 @@
 ## Генератор примеров по методологии "соробан"
 
-![](https://img.shields.io/github/stars/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/forks/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/tag/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/issues/web-west/generate-soroban-training.svg)
+![](https://travis-ci.org/web-west/generate-soroban-training.svg?branch=master) ![](https://img.shields.io/github/stars/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/forks/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/tag/web-west/generate-soroban-training.svg) ![](https://img.shields.io/github/issues/web-west/generate-soroban-training.svg)
 
 ### Возможности
 

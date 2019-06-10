@@ -17,6 +17,8 @@ export default class {
         this.limit = config.limit || 5000;
         this.exceptions = config.exceptions || null
         this.maxAllowedNumber = Math.max(...config.allowedNumbers) || null
+        this.minAllowedNumber = Math.min(...config.allowedNumbers) || null
+        this.containedNumbers = config.allowedNumbers || null
     }
 
     getCombinationAllowedNumbers () {
@@ -64,13 +66,22 @@ export default class {
                     this.generateActionNumbers = ex.FirstMinusNumber(this.generateActionNumbers)
                     break;
                 case 'sum <= max allowed number':
-                    this.generateActionNumbers = ex.SumLargeEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.maxAllowedNumber)
+                    this.generateActionNumbers = ex.SumLessEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.maxAllowedNumber)
+                    break;
+                case 'sum >= min allowed number':
+                    this.generateActionNumbers = ex.SumLargeEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.minAllowedNumber)
                     break;
                 case 'sub sum <= max allowed number':
+                    this.generateActionNumbers = ex.SubSumLessEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.maxAllowedNumber)
+                    break;
+                case 'sub sum >= min allowed number':
                     this.generateActionNumbers = ex.SubSumLargeEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.maxAllowedNumber)
                     break;
-                case 'sub sum != zero':
+                case 'sum != zero':
                     this.generateActionNumbers = ex.SumNotZero(this.generateActionNumbers)
+                    break;
+                case 'sum contained numbers':
+                    this.generateActionNumbers = ex.SumContainedNumbers(this.generateActionNumbers, this.exceptions[key] || this.containedNumbers)
                     break;
                 case 'actions':
                     this.generateActionNumbers = ex.Actions(this.generateActionNumbers, this.exceptions[key])

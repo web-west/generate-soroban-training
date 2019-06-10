@@ -1,6 +1,6 @@
 {
   "name": "generate-soroban-training",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Generate soroban for training",
   "main": "lib/index.js",
   "scripts": {

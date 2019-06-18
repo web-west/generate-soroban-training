@@ -21,8 +21,6 @@ import SorobanTraining from './SorobanTraining';
 
 let soromban = new SorobanTraining(config);
 
-console.dir(soromban.getExamplesString()); */
-
-// console.dir(soromban.getExamplesArray().length);
+soromban.getCombinationJoinedNumbersActions() */
 
 module.exports = SorobanTraining

@@ -59,9 +59,11 @@ export default class {
             } while (result.length < this.exampleslength && i < this.limit)
         }
         const end = new Date().getTime();
-        this.log(`Combination: ${len}, Time complile: ${(end - start)/1000}s, iteration: ${i}, examples: ${result.length}`)
+        this.generateActionNumbers = result;
 
-        return this.generateActionNumbers = result;
+        this.log(`Combination: ${len}, Time complile: ${(end - start)/1000}s, Iteration: ${i}, Examples: ${result.length}`)
+        this.log(this.getExamplesArray())
+        this.log(this.getExamplesString())
     }
 
     clearFirstZeroNumber () {
@@ -105,7 +107,6 @@ export default class {
     }
 
     getExamplesArray () {
-        this.getCombinationJoinedNumbersActions()
         return this.generateActionNumbers.filter((i, index) => (index < this.exampleslength)).map((item) => {
             return {
                 example: item,
@@ -120,7 +121,6 @@ export default class {
             let ex = helper.ArrayToNumberNormalize(item.example);
             let sum = `=${item.sum}`
             return  ex.join('') + sum
-        })
-        return 
+        }) 
     }
 };

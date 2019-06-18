@@ -8,17 +8,23 @@ export default class {
     constructor (config) {
         this.numbersArray = [];
         this.digit = config.digit || 1;
+        this.debug = config.debug || false;
         this.actions = config.actions || 2;
         this.exampleslength = config.exampleslength || 1;
         this.allowedNumbers = config.allowedNumbers || [];
         this.combinationAllowedNumbers = [];
-        this.rundomIteration = config.rundomIteration || 10;
         this.generateActionNumbers = [];
-        this.limit = config.limit || 5000;
+        this.limit = config.limit || 50000;
         this.exceptions = config.exceptions || null
         this.maxAllowedNumber = Math.max(...config.allowedNumbers) || null
         this.minAllowedNumber = Math.min(...config.allowedNumbers) || null
         this.containedNumbers = config.allowedNumbers || null
+    }
+
+    log (data) {
+        if (this.debug) {
+            console.log(data)
+        }
     }
 
     getCombinationAllowedNumbers () {
@@ -30,64 +36,72 @@ export default class {
 
     getRundomCombinationNumbersJoined () {
         let array = this.getCombinationAllowedNumbers();
-        return helper.ArrayJoinToNumbersRundom(array, this.rundomIteration);
+        return helper.ArrayJoinToNumbers(array, array.length);
     }
 
     getCombinationJoinedNumbersActions () {
-        let array = this.getRundomCombinationNumbersJoined(),
-            result = [];
+        const start = new Date().getTime();
+        let array = this.getRundomCombinationNumbersJoined();
+        let result = [];
 
         this.generateActionNumbers = Combinatorics.baseN(array, this.actions);
-
-        let length = this.generateActionNumbers.length
-
-        for(let i = 0; i < this.limit; i++) {
-            let index = helper.Random(length);
-            result.push(this.generateActionNumbers.nth(index));
-        }
-
-        this.generateActionNumbers = Sugar.Array.unique(result);
+        let len = this.generateActionNumbers.length
+        let i = 0
 
         if (this.exceptions) {
-            this.clearExceptions()
+            do {
+                let r = helper.Random(len - 1);
+                let item = this.clearExceptions([this.generateActionNumbers.nth(r)])            
+                if (item.length) {
+                    result.push(item[0])
+                }
+                i++;
+            } while (result.length < this.exampleslength && i < this.limit)
         }
+        const end = new Date().getTime();
+        this.log(`Combination: ${len}, Time complile: ${(end - start)/1000}s, iteration: ${i}, examples: ${result.length}`)
 
-        return this.generateActionNumbers;
+        return this.generateActionNumbers = result;
     }
 
     clearFirstZeroNumber () {
         this.combinationAllowedNumbers = this.combinationAllowedNumbers.filter(item => item[0] !== 0);
     }
 
-    clearExceptions () {
+    clearExceptions (array) {
+        let result = array
         for (let key in this.exceptions) {
-            switch (key) {
-                case 'first mines number':
-                    this.generateActionNumbers = ex.FirstMinusNumber(this.generateActionNumbers)
-                    break;
-                case 'sum <= max allowed number':
-                    this.generateActionNumbers = ex.SumLessEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.maxAllowedNumber)
-                    break;
-                case 'sum >= min allowed number':
-                    this.generateActionNumbers = ex.SumLargeEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.minAllowedNumber)
-                    break;
-                case 'sub sum <= max allowed number':
-                    this.generateActionNumbers = ex.SubSumLessEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.maxAllowedNumber)
-                    break;
-                case 'sub sum >= min allowed number':
-                    this.generateActionNumbers = ex.SubSumLargeEqullyMaxAllowedNumber(this.generateActionNumbers, this.exceptions[key] || this.maxAllowedNumber)
-                    break;
-                case 'sum != zero':
-                    this.generateActionNumbers = ex.SumNotZero(this.generateActionNumbers)
-                    break;
-                case 'sum contained numbers':
-                    this.generateActionNumbers = ex.SumContainedNumbers(this.generateActionNumbers, this.exceptions[key] || this.containedNumbers)
-                    break;
-                case 'actions':
-                    this.generateActionNumbers = ex.Actions(this.generateActionNumbers, this.exceptions[key])
-                    break;
+            if (result.length) {
+                switch (key) {
+                    case 'first mines number':
+                        result = ex.FirstMinusNumber(result)
+                        break;
+                    case 'sum <= max allowed number':
+                        result = ex.SumLessEqullyMaxAllowedNumber(result, this.exceptions[key] || this.maxAllowedNumber)
+                        break;
+                    case 'sum >= min allowed number':
+                        result = ex.SumLargeEqullyMinAllowedNumber(result, this.exceptions[key] || this.minAllowedNumber)
+                        break;
+                    case 'sub sum <= max allowed number':
+                        result = ex.SubSumLessEqullyMaxAllowedNumber(result, this.exceptions[key] || this.maxAllowedNumber)
+                        break;
+                    case 'sub sum >= min allowed number':
+                        result = ex.SubSumLargeEqullyMinAllowedNumber(result, this.exceptions[key] || this.minAllowedNumber)
+                        break;
+                    case 'sum != zero':
+                        result = ex.SumNotZero(result)
+                        break;
+                    case 'sum contained numbers':
+                        result = ex.SumContainedNumbers(result, this.exceptions[key] || this.containedNumbers)
+                        break;
+                    case 'actions':
+                        result = ex.Actions(result, this.exceptions[key])
+                        break;
+                }
             }
         }
+
+        return result
     }
 
     getExamplesArray () {

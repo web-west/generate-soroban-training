@@ -11,7 +11,7 @@ export function SumLessEqullyMaxAllowedNumber(array, max) {
     });
 }
 
-export function SumLargeEqullyMaxAllowedNumber (array, min) {
+export function SumLargeEqullyMinAllowedNumber (array, min) {
     return array.filter((item) => {
         let sum = helper.ArrayNumbersSum(item);
         return sum >= min;
@@ -33,7 +33,7 @@ export function SubSumLessEqullyMaxAllowedNumber(array, max) {
     });
 }
 
-export function SubSumLargeEqullyMaxAllowedNumber(array, min) {
+export function SubSumLargeEqullyMinAllowedNumber(array, min) {
     return array.filter((item) => {
         let filtered = true;
         let subSum = item[0];

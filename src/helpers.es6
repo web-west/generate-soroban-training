@@ -17,8 +17,21 @@ export function ArrayJoinToNumbersRundom(array, iteration) {
     return Sugar.Array.unique(nums);
 }
 
+export function ArrayJoinToNumbers(array, iteration) {
+    let nums = [],
+        arrLength = array.length,
+        iter = arrLength < iteration ? arrLength : iteration
+
+    for (let i = 0; i < iter; i++) {
+        var random = array[i].join('');
+        nums = nums.concat([parseInt(random)]);
+        nums = nums.concat([-parseInt(random)]);
+    }
+    return Sugar.Array.unique(nums);
+}
+
 export function ArrayNumbersSum(array) {
-    return eval(array.join('+'))
+    return eval(ArrayToNumberNormalize(array).join(''))
 }
 
 export function ArrayToNumberNormalize(array) {
